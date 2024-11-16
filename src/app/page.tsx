@@ -1,16 +1,12 @@
 import { Button } from "@/components/ui/button";
-import { UserButton} from "@clerk/nextjs";
+import { UserButton } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
-import { Link, LogIn } from "lucide-react";
+import { LogIn } from "lucide-react";
+import Link from "next/link"; // Import Link from next/link
 
 export default async function Home() {
-  const { userId, redirectToSignIn  } = await auth();
+  const { userId } = await auth();
   const isAuth = !!userId;
-  
-  // Redirect to sign-in if not authenticated
-  if (!isAuth) {
-    return redirectToSignIn();
-  }
 
   return (
     <div className="w-screen min-h-screen bg-gradient-to-tr from-blue-700 via-blue-800 to-gray-900">
@@ -18,35 +14,32 @@ export default async function Home() {
         <div className="flex flex-col items-center text-center">
           <div className="flex items-center mb-4">
             <h1 className="mr-3 text-5xl font-semibold text-white">Chat with any PDF</h1>
-            <UserButton afterSignOutUrl="/" />
+            {isAuth && <UserButton afterSignOutUrl="/" />}
           </div>
 
-          {isAuth && (
+          {isAuth ? (
             <div className="flex mt-3">
-              <Button className="px-4 py-2 text-lg font-medium">
-                Go to Chats
-              </Button>
+              <Button className="px-4 py-2 text-lg font-medium">Go to Chats</Button>
+            </div>
+          ) : (
+            <div className="flex mt-4">
+              <Link href="/sign-in">
+                <Button className="flex items-center px-4 py-2 text-lg font-medium">
+                  Login to get Started!
+                  <LogIn className="w-4 h-4 ml-2" />
+                </Button>
+              </Link>
             </div>
           )}
-  
+
           <p className="max-w-xl mt-1 text-lg text-gray-200">
             Join millions of students, researchers, and professionals to instantly
             answer questions and understand research with AI.
           </p>
 
-
-          <div className="flex mt-4">
-            {isAuth ? ( <h1> fileUpload </h1> ):(
-              <link href="/sign-in">
-                 <Button>  Login to get Started! </Button>
-                    <LogIn className="w-4 h-4 m1-2" />
-                  </link>
-                  )}
-            </div>
-
-  
+          {isAuth && <h1 className="mt-4">fileUpload</h1>}
         </div>
       </div>
     </div>
   );
-}  
+}
