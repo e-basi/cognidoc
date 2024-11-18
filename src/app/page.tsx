@@ -2,7 +2,8 @@ import { Button } from "@/components/ui/button";
 import { UserButton } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import { LogIn } from "lucide-react";
-import Link from "next/link"; // Import Link from next/link
+import TypingAnimation from "@/components/magicui/typing-animation";
+import Link from "next/link";
 
 export default async function Home() {
   const { userId } = await auth();
@@ -13,7 +14,11 @@ export default async function Home() {
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
         <div className="flex flex-col items-center text-center">
           <div className="flex items-center mb-4">
-            <h1 className="mr-3 text-5xl font-semibold text-white">Chat with any PDF</h1>
+            {/* Use TypingAnimation for the animated text */}
+            <TypingAnimation
+              className="mr-3 text-5xl font-semibold text-white"
+              text="Chat with any PDF"
+            />
             {isAuth && <UserButton afterSignOutUrl="/" />}
           </div>
 
