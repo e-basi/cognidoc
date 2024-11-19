@@ -10,7 +10,7 @@ export default async function Home() {
   const isAuth = !!userId;
 
   return (
-    <div className="w-screen min-h-screen bg-gradient-to-tr from-blue-700 via-blue-800 to-gray-900">
+    <div className="w-screen min-h-screen bg-gradient-to-tr from-blue-900 via-blue-700 to-gray-900">
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
         <div className="flex flex-col items-center text-center">
         <div className="relative flex w-full flex-col items-center justify-start px-4 pt-32 sm:px-6 sm:pt-24 md:pt-32 lg:px-8">
@@ -43,11 +43,11 @@ export default async function Home() {
   <div className="flex w-full max-w-2xl flex-col space-y-4 overflow-hidden pt-8">
     {/* Use TypingAnimation for the animated text */}
     <TypingAnimation
-      className="text-center text-4xl font-medium leading-tight text-gray-200 sm:text-5xl md:text-6xl"
+      className="text-center text-4xl font-medium leading-tight text-gray-100 sm:text-5xl md:text-6xl"
       text="Turn PDFs into AI conversations."
     />
      <p
-  className="mx-auto max-w-3xl text-center text-lg leading-relaxed text-gray-200 sm:text-xl sm:leading-7"
+  className="mx-auto max-w-3xl text-center text-lg leading-relaxed text-gray-100 sm:text-xl sm:leading-7"
   style={{
     margin: "0 auto", // Ensures it is horizontally centered
     textAlign: "center", // Centers text within the paragraph
