@@ -10,7 +10,14 @@ export default async function Home() {
   const isAuth = !!userId;
 
   return (
-    <div className="w-screen min-h-screen bg-gradient-to-tr from-blue-900 via-blue-700 to-gray-900">
+    <div className="w-screen min-h-screen bg-gradient-to-tr from-blue-900 via-blue-700 to-gray-900 relative">
+      {/* Position UserButton at the top-right corner */}
+      {isAuth && (
+        <div className="absolute top-4 right-4 z-50">
+          <UserButton afterSignOutUrl="/" />
+        </div>
+      )}
+
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
         <div className="flex flex-col items-center text-center">
         <div className="relative flex w-full flex-col items-center justify-start px-4 pt-32 sm:px-6 sm:pt-24 md:pt-32 lg:px-8">
@@ -63,7 +70,7 @@ export default async function Home() {
   </div>
 
   {isAuth ? (
-            <div className="flex mt-3">
+            <div className="flex mt-3 space-x-3">
               <Button className="px-4 py-2 text-lg font-medium">Go to Chats</Button> 
             </div>
           ) : (
@@ -76,8 +83,6 @@ export default async function Home() {
               </Link>
             </div>
           )}
-
-  {isAuth && <UserButton afterSignOutUrl="/" />}
 </div>
           <p
       className="mx-auto max-w-xl text-center text-lg leading-7 text-gray-200 sm:text-xl sm:leading-9 text-balance"

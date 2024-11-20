@@ -4,6 +4,12 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden; /* Keep this to prevent horizontal scrolling */
+  overflow-y: hidden; /* Allow vertical scrolling */
+}
+
+header {
+  background-color: transparent;
 }
 
 @layer base {
