@@ -4,7 +4,7 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
-  overflow-x: hidden; /* Keep this to prevent horizontal scrolling */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
   overflow-y: hidden; /* Allow vertical scrolling */
 }
 
@@ -14,13 +14,14 @@ header {
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Light Mode Variables */
+    --background: 0 0% 100%; /* White background */
+    --foreground: 222.2 84% 4.9%; /* Dark text */
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
-    --primary: 222.2 47.4% 11.2%;
+    --primary: 222.2 47.4% 11.2%; /* Blueish gray */
     --primary-foreground: 210 40% 98%;
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
@@ -40,9 +41,11 @@ header {
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
   }
+
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    /* Dark Mode Variables */
+    --background: 222.2 84% 4.9%; /* Dark background */
+    --foreground: 210 40% 98%; /* Light text */
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
     --popover: 222.2 84% 4.9%;
@@ -74,5 +77,6 @@ header {
   }
   body {
     @apply bg-background text-foreground;
+    transition: background-color 0.3s, color 0.3s;
   }
 }
