@@ -1,20 +1,20 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { Sun, Moon } from "lucide-react";
 
 export default function ThemeToggle() {
-  const [theme, setTheme] = useState<string>("light");
+  // Manage theme state
+  const [theme, setTheme] = useState("light");
 
+  // Set the initial theme from localStorage or default to "light"
   useEffect(() => {
-    const storedTheme = localStorage.getItem("theme");
-    if (storedTheme) {
-      setTheme(storedTheme);
-      document.documentElement.className = storedTheme;
-    } else {
-      document.documentElement.className = "light";
-    }
+    const savedTheme = localStorage.getItem("theme") || "light";
+    setTheme(savedTheme);
+    document.documentElement.className = savedTheme;
   }, []);
 
+  // Toggle theme and update localStorage
   const toggleTheme = () => {
     const newTheme = theme === "light" ? "dark" : "light";
     setTheme(newTheme);
@@ -25,9 +25,12 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-600 dark:bg-gray-200 dark:text-black dark:hover:bg-gray-400 transition-all duration-300"
+      aria-label="Toggle Theme"
+      className={`flex items-center justify-center w-10 h-10 rounded-full transition-all duration-300 ${
+        theme === "light" ? "hover:bg-gray-700" : "hover:bg-gray-400"
+      }`}
     >
-      {theme === "light" ? "🌙 Dark Mode" : "☀️ Light Mode"}
+      {theme === "light" ? <Sun className="w-6 h-6 text-white" /> : <Moon className="w-6 h-6 text-white" />}
     </button>
   );
 }
