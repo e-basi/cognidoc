@@ -62,7 +62,7 @@ export default async function Home() {
                 className="text-center text-4xl font-medium leading-tight sm:text-5xl md:text-6xl text-primary dark:text-gray-100"
                 text="Turn PDFs into AI conversations."
               />
-              <p className="mx-auto max-w-3xl text-lg leading-relaxed text-gray-400 dark:text-gray-100 sm:text-xl sm:leading-7">
+              <p className="mx-auto max-w-3xl text-lg leading-relaxed text-gray-500 dark:text-gray-100 sm:text-xl sm:leading-7">
                 Unlock answers, insights, and understanding in an instant. Let
                 our AI transform your questions into clarity, and your
                 curiosity into breakthroughs.
@@ -94,7 +94,7 @@ export default async function Home() {
           </div>
 
           {/* Additional Information */}
-          <p className="mx-auto max-w-xl text-lg leading-7 text-gray-400 dark:text-gray-200 sm:text-xl sm:leading-9">
+          <p className="mx-auto max-w-xl text-lg leading-7 text-gray-500 dark:text-gray-200 sm:text-xl sm:leading-9">
             Transform how you interact with your documents using cutting-edge AI
             technology.
           </p>
