@@ -4,6 +4,7 @@ import { auth } from "@clerk/nextjs/server";
 import { LogIn } from "lucide-react";
 import TypingAnimation from "@/components/magicui/typing-animation";
 import Link from "next/link";
+import FileUpload from "@/components/ui/FileUpload";
 
 export default async function Home() {
   const { userId } = await auth();
@@ -70,12 +71,13 @@ export default async function Home() {
             </div>
 
             {/* Call-to-Action Buttons */}
-            {isAuth ? (
+            {isAuth ? (  
+              <>
+              <FileUpload />
               <div className="flex mt-3 space-x-3">
-                <Button className="px-4 py-2 text-lg font-medium">
-                  Go to Chats
-                </Button>
+                <Button className="px-4 py-2 text-lg font-medium">Go to Chats</Button>
               </div>
+            </>
             ) : (
               <div className="flex mt-4">
   <Link href="/sign-in">
