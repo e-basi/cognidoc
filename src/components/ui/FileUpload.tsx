@@ -1,5 +1,6 @@
 'use client';
 
+import { Inbox } from 'lucide-react';
 import React from 'react';
 import { useDropzone } from 'react-dropzone';
 
@@ -15,9 +16,10 @@ const FileUpload = (props: Props) => {
     className="w-72 h-36 border-dashed border-2 border-gray-300 rounded-lg cursor-pointer bg-gray-50 flex justify-center items-center flex-col"
   >
     <input {...getInputProps()} />
-    <p className="text-gray-500 text-center">
-      Drag & drop files here, or click to select files
-    </p>
+    <>
+    <Inbox className='w-10 h-10 text-blue-700'/>
+    <p className='mt-2 text-sm text-slate-400 font-medium'> Upload PDF Here </p>
+    </>
   </div>
 </div>
 
