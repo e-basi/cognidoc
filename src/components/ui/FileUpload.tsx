@@ -9,13 +9,18 @@ const FileUpload = (props: Props) => {
   const { getRootProps, getInputProps } = useDropzone();
 
   return (
-    <div
-      {...getRootProps()}
-      className="p-4 bg-gray-100 border border-dashed border-gray-300 rounded-lg"
-    >
-      <input {...getInputProps()} />
-      <p className="text-gray-500">Drag & drop files here, or click to select files</p>
-    </div>
+    <div className="p-4 bg-white rounded-xl shadow-md flex justify-center items-center">
+  <div
+    {...getRootProps()}
+    className="w-72 h-36 border-dashed border-2 border-gray-300 rounded-lg cursor-pointer bg-gray-50 flex justify-center items-center flex-col"
+  >
+    <input {...getInputProps()} />
+    <p className="text-gray-500 text-center">
+      Drag & drop files here, or click to select files
+    </p>
+  </div>
+</div>
+
   );
 };
 

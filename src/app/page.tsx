@@ -102,7 +102,7 @@ export default async function Home() {
           </p>
 
           {/* File Upload (Auth Only) */}
-          {isAuth && <h1 className="mt-4">fileUpload</h1>}
+          {isAuth && <h1 className="mt-4"></h1>}
         </div>
       </div>
     </div>
