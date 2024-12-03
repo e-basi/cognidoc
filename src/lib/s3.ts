@@ -20,10 +20,15 @@ export async function uploadToS3(file: File) {
 
         // Perform the upload
         await s3.putObject(params);
-        console.log('File successfully uploaded to S3:', fileKey);
-        return fileKey; // Return the key if needed
+        console.log('File successfully uploaded to S3:', { fileKey, fileName: file.name });
+        return { fileKey, fileName: file.name }; // Return file key and file name
     } catch (error) {
         console.error('Error uploading to S3:', error);
         throw error; // Re-throw error for further handling
     }
+}
+
+export function getS3Url(file_key: string) {
+    const url = `https://${process.env.NEXT_PUBLIC_S3_BUCKET_NAME}.s3.us-east-2.amazonaws.com/${file_key}`;
+    return url;
 }
