@@ -14,8 +14,6 @@ export async function POST(req: Request) {
 
     console.log("Received data:", { file_key, file_name });
 
-    // Your logic here...
-
     return NextResponse.json({ message: "Chat created successfully" });
   } catch (error) {
     console.error("Error in /api/chat-creation:", error);
