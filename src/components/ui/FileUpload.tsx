@@ -1,7 +1,7 @@
 'use client';
 
 import axios from "axios";
-import { uploadToS3 } from '@/lib/s3';
+import { uploadToS3 } from '@/lib/s3'; 
 import { useMutation } from '@tanstack/react-query';
 import { Inbox, Loader2 } from 'lucide-react';
 import React from 'react';
