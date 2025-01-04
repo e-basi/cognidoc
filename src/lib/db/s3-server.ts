@@ -1,30 +1,46 @@
-import AWS from 'aws-sdk';
-import fs from 'fs';
+// /lib/db/s3-server.ts
+import AWS from "aws-sdk";
 
-export async function downloadFromS3(fileKey: string) {
+// 2) Suppress the maintenance mode message
+// @ts-ignore (to avoid type complaints in TypeScript)
+import maintenanceModeMessage from "aws-sdk/lib/maintenance_mode_message";
+maintenanceModeMessage.suppress = true;
+
+import * as fs from "fs";
+import path from "path";
+
+/**
+ * downloadFromS3
+ * Downloads a file from S3 and writes to /tmp directory in Node.js.
+ * @param fileKey The S3 object key (e.g., "uploads/1693568801787hjkn.pdf")
+ * @returns The local file path (string) where the file was written
+ */
+export async function downloadFromS3(fileKey: string): Promise<string> {
+  AWS.config.update({
+    region: process.env.NEXT_PUBLIC_S3_REGION || "us-east-1",
+    accessKeyId: process.env.NEXT_PUBLIC_S3_ACCESS_KEY_ID,
+    secretAccessKey: process.env.NEXT_PUBLIC_S3_SECRET_ACCESS_KEY,
+  });
+
+  const bucketName = process.env.NEXT_PUBLIC_S3_BUCKET_NAME!;
+  const s3 = new AWS.S3();
+
   try {
-    AWS.config.update({
-      accessKeyId: process.env.NEXT_PUBLIC_S3_ACCESS_KEY_ID,
-      secretAccessKey: process.env.NEXT_PUBLIC_S3_SECRET_ACCESS_KEY,
-    });
+    // Retrieve object from S3
+    const data = await s3.getObject({ Bucket: bucketName, Key: fileKey }).promise();
 
-    const s3 = new AWS.S3({
-      region: process.env.NEXT_PUBLIC_S3_REGION,
-    });
+    if (!data.Body) {
+      throw new Error("S3 getObject: No body returned.");
+    }
 
-    const params = {
-      Bucket: process.env.NEXT_PUBLIC_S3_BUCKET_NAME!,
-      Key: fileKey,
-    };
+    // Ensure /tmp directory is valid in your environment
+    const filePath = path.resolve("/tmp", path.basename(fileKey));
+    fs.writeFileSync(filePath, data.Body as Buffer);
 
-    const data = await s3.getObject(params).promise();
-
-    const fileName = `/tmp/pdf-${Date.now()}.pdf`;
-    fs.writeFileSync(fileName, data.Body as Buffer);
-
-    return data.Body;
+    console.log("File downloaded and saved to:", filePath);
+    return filePath;
   } catch (error) {
-    console.error('Error downloading from S3:', error);
-    throw error;
+    console.error("Error downloading file from S3:", error);
+    throw new Error("Failed to download file from S3.");
   }
 }

@@ -1,21 +1,19 @@
 'use client';
 
 import axios from "axios";
-import { uploadToS3 } from '@/lib/s3';
-import { useMutation } from '@tanstack/react-query';
-import { Inbox, Loader2 } from 'lucide-react';
-import React from 'react';
-import { useDropzone } from 'react-dropzone';
+import { uploadToS3 } from "@/lib/s3";
+import { useMutation } from "@tanstack/react-query";
+import { Inbox, Loader2 } from "lucide-react";
+import React from "react";
+import { useDropzone } from "react-dropzone";
 import toast from "react-hot-toast";
 
-type Props = {};
-
-const FileUpload = (props: Props) => {
+const FileUpload = () => {
   const [uploading, setUploading] = React.useState(false); // State to handle S3 upload loading
   const mutation = useMutation({
     mutationFn: async ({ file_key, file_name }: { file_key: string; file_name: string }) => {
       console.log("Sending to /api/chat-creation:", { file_key, file_name });
-      const response = await axios.post('/api/chat-creation', { file_key, file_name });
+      const response = await axios.post("/api/chat-creation", { file_key, file_name });
       return response.data;
     },
     onError: (error) => {
@@ -24,7 +22,7 @@ const FileUpload = (props: Props) => {
     },
     onSuccess: (data) => {
       console.log("Mutation successful:", data);
-      toast.success("chat created successfully!");
+      toast.success("Chat created successfully!");
     },
   });
 
