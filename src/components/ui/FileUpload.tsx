@@ -7,8 +7,10 @@ import { Inbox, Loader2 } from "lucide-react";
 import React from "react";
 import { useDropzone } from "react-dropzone";
 import toast from "react-hot-toast";
+import {useRouter} from "next/navigation";
 
 const FileUpload = () => {
+  const router = useRouter()
   const [uploading, setUploading] = React.useState(false); // State to handle S3 upload loading
   const mutation = useMutation({
     mutationFn: async ({ file_key, file_name }: { file_key: string; file_name: string }) => {
@@ -16,13 +18,17 @@ const FileUpload = () => {
       const response = await axios.post("/api/chat-creation", { file_key, file_name });
       return response.data;
     },
+
+    onSuccess: (chat_id) => {
+      toast.success("Chat created successfully!");
+      router.push(`/chat/${chat_id}`);
+      console.log("Mutation successful:", chat_id);
+      
+    }, 
+
     onError: (error) => {
       console.error("Mutation failed:", error);
       toast.error("An error occurred while creating the chat.");
-    },
-    onSuccess: (data) => {
-      console.log("Mutation successful:", data);
-      toast.success("Chat created successfully!");
     },
   });
 
