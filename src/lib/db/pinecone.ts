@@ -5,6 +5,11 @@ import { PDFLoader } from "@langchain/community/document_loaders/fs/pdf";
 import * as fs from "fs";
 import path from "path";
 
+import {
+  Document as PineconeDocument,
+  RecursiveCharacterTextSplitter,
+} from "@pinecone-database/doc-splitter";
+
 const pinecone = new Pinecone({
   // For older Pinecone versions, or if your version supports `Pinecone` directly:
   apiKey: process.env.PINECONE_API_KEY!,
@@ -14,6 +19,13 @@ const pinecone = new Pinecone({
 
 export default pinecone;
 
+
+type PDFPage = {
+  pageContent: string;
+  metadata: {
+    loc: { pageNumber: number };
+  };
+};
 /**
  * loadS3IntoPinecone
  * 1. Downloads a PDF from S3 to /tmp
@@ -39,17 +51,45 @@ export async function loadS3IntoPinecone(fileKey: string) {
 
     console.log("Loading PDF into memory...");
     const loader = new PDFLoader(normalizedPath);
-    const pages = await loader.load(); // If this fails, see if it's a PDFLoader version mismatch
+    const pages: PDFPage[] = (await loader.load()) as PDFPage[]; // If this fails, see if it's a PDFLoader version mismatch
     console.log("PDF pages loaded:", pages?.length || 0);
+
+    //   2. Split pages & segment  
+
+    const documents = (await Promise.all(pages.map(prepareDocument))).flat();
+    
+
+    //vectorise & embeddings documents
 
     // OPTIONAL: If you want to do actual indexing with Pinecone:
     //   1. Split pages
     //   2. Get embeddings
     //   3. Upsert to Pinecone
-
-    return pages;
+    return documents;
   } catch (error) {
     console.error("Error in loadS3IntoPinecone:", error);
     throw error;
   }
+}
+
+
+export const trunatStringByBytes = (str: string, bytes: number)=> {
+  const enc = new TextEncoder()
+  return new TextDecoder('utf-8').decode(enc.encode(str).slice(0, bytes))
+}
+async function prepareDocument(page: PDFPage): Promise<PineconeDocument[]> {
+  let { pageContent, metadata } = page;
+  pageContent = pageContent.replace(/\n/g, "");
+
+  const splitter = new RecursiveCharacterTextSplitter();
+  const docs = await splitter.splitDocuments([
+    new PineconeDocument({
+      pageContent,
+      metadata: {
+        pageNumber: metadata.loc.pageNumber,
+        text: pageContent,
+      },
+    }),
+  ]);
+  return docs;
 }

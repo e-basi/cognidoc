@@ -17,7 +17,7 @@ export async function POST(req: Request) {
     }
 
     console.log("Calling loadS3IntoPinecone with:", file_key);
-    const pages = await loadS3IntoPinecone(file_key);
+    const pages: any[] = await loadS3IntoPinecone(file_key);
     console.log("Pages loaded successfully:", pages?.length || 0);
 
     // Return some success or do further processing
