@@ -53,7 +53,7 @@ export default async function ChatPage( props : Props) {
   return (
     <div className="flex max-h-screen">
       {/* Chat Sidebar */}
-      <div className="flex-[1] max-w-xs border-r border-slate-200">
+      <div className="flex-[1] max-w-xs">
         <ChatSideBar chats={_chats} chatId={parseInt(chatId, 10)} />
       </div>
 
