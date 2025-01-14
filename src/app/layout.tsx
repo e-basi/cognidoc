@@ -5,6 +5,7 @@ import ThemeToggle from "./theme-toggle";
 import {Toaster} from 'react-hot-toast'
 import Providers from "@/components/ui/Providers";
 
+
 export const metadata: Metadata = {
   title: "CogniDoc",
 };
@@ -15,17 +16,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider>
-      
+    <ClerkProvider>  
       <html lang="en">
         <body>
         <Providers>
-          <div className="absolute top-4 left-4 z-50">
-            <ThemeToggle />
-          </div>
           {children}
           <Toaster/>
-          </Providers>
+        </Providers>
         </body>
       </html>
     </ClerkProvider>

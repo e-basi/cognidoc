@@ -5,6 +5,7 @@ import { LogIn } from "lucide-react";
 import TypingAnimation from "@/components/magicui/typing-animation";
 import Link from "next/link";
 import FileUpload from "@/components/ui/FileUpload";
+import ThemeToggle from "@/app/theme-toggle";
 
 export default async function Home() {
   const { userId } = await auth();
@@ -21,6 +22,9 @@ export default async function Home() {
           <UserButton afterSignOutUrl="/" />
         </div>
       )}
+      <div className="absolute top-4 left-4 z-50">
+            <ThemeToggle />
+      </div>
 
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
         <div className="flex flex-col items-center text-center">

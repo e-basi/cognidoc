@@ -18,14 +18,14 @@ const FileUpload = () => {
       const response = await axios.post("/api/chat-creation", { file_key, file_name });
       return response.data;
     },
-
-    onSuccess: (chat_id) => {
+  
+    onSuccess: (data) => {
+      const { chat_id } = data;
       toast.success("Chat created successfully!");
-      router.push(`/chat/${chat_id}`);
-      console.log("Mutation successful:", chat_id);
-      
-    }, 
-
+      router.push(`/chat/${chat_id}`); // Navigate to the chat page
+      console.log("Mutation successful:", data);
+    },
+  
     onError: (error) => {
       console.error("Mutation failed:", error);
       toast.error("An error occurred while creating the chat.");

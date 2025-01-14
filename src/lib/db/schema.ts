@@ -13,6 +13,8 @@ export const chats = pgTable('chats', {
     fileKey: text('filekey').notNull(),
 });
 
+export type DrizzleChat = typeof chats.$inferSelect;
+
 // Define the messages table
 export const messages = pgTable('messages', {
     id: serial('id').primaryKey(),
@@ -23,3 +25,4 @@ export const messages = pgTable('messages', {
     createdAt: timestamp('created_at').notNull().defaultNow(),
     role: userSystemEnum('role').notNull(), // Use the defined enum
 });
+ 
