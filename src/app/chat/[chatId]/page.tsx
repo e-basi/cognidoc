@@ -6,6 +6,7 @@ import { db } from "@/lib/db";
 import { chats } from "@/lib/db/schema";
 import ChatSideBar from "@/components/ui/ChatSideBar";
 import PDFViewer from "@/components/ui/PDFViewer";
+import ChatComponent from "@/components/ui/ChatComponent";
 
 
 type Props = {
@@ -65,6 +66,7 @@ export default async function ChatPage( props : Props) {
       {/* Chat Messages */}
       <div className="flex-[3] border-l border-slate-200">
         {/* Chat messages and interactions go here */}
+        <ChatComponent />
       </div>
     </div>
   );

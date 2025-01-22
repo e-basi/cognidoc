@@ -1,5 +1,4 @@
 "use client";
-
 import { DrizzleChat } from "@/lib/db/schema";
 import Link from "next/link";
 import React, { useState } from "react";
@@ -22,7 +21,7 @@ const groupChatsByDate = (chats: DrizzleChat[]) => {
   const grouped: { [key: string]: DrizzleChat[] } = {};
 
   chats.forEach((chat) => {
-    const date = new Date(chat.createdAt); // Assuming `createdAt` is the timestamp for chat creation
+    const date = new Date(chat.createdAt);
     let group = "";
 
     if (isToday(date)) {
@@ -30,7 +29,7 @@ const groupChatsByDate = (chats: DrizzleChat[]) => {
     } else if (isYesterday(date)) {
       group = "Yesterday";
     } else if (date > subDays(new Date(), 7)) {
-      group = "Past  7 Days";
+      group = "Past 7 Days";
     } else {
       group = format(date, "MMMM d, yyyy");
     }
@@ -51,9 +50,9 @@ const ChatSideBar = ({ chats, chatId }: Props) => {
   return (
     <motion.div
       layout
-      className={`h-screen overflow-y-auto border-r border-slate-200 bg-background text-foreground`}
+      className={`h-screen overflow-y-auto border-r border-slate-200 bg-background text-foreground relative`}
       style={{
-        width: open ? "225px" : "fit-content", // Full width when open, fit content when collapsed
+        width: open ? "225px" : "fit-content",
       }}
     >
       {/* Header Section */}
@@ -98,15 +97,13 @@ const ChatSideBar = ({ chats, chatId }: Props) => {
           </motion.div>
 
           {/* Grouped Chats */}
-      <div className="flex flex-col gap-4 mt-4 px-4">
+          <div className="flex flex-col gap-4 mt-4 px-4">
             {Object.entries(groupedChats)
               .sort(([groupA], [groupB]) => {
-                // Custom sorting logic for groups
-                const order = ["Today", "Yesterday", "Previous 7 Days"];
+                const order = ["Today", "Yesterday", "Past 7 Days"];
                 const indexA = order.indexOf(groupA);
                 const indexB = order.indexOf(groupB);
                 if (indexA === -1 && indexB === -1) {
-                  // Sort by date string if both are custom dates
                   return new Date(groupA).getTime() - new Date(groupB).getTime();
                 }
                 return (indexA === -1 ? 3 : indexA) - (indexB === -1 ? 3 : indexB);
@@ -143,13 +140,23 @@ const ChatSideBar = ({ chats, chatId }: Props) => {
                       </motion.div>
                     </Link>
                   ))}
-      </div>
-    ))}
-</div>
-
-
+                </div>
+              ))}
+          </div>
         </>
       )}
+
+      {/* Footer */}
+      <div className="absolute bottom-4 left-4">
+        <div className="flex items-center gap-2 text-sm text-muted-foreground flex-wrap">
+          <Link href="/">HOME</Link>
+          <Link href="/">SOURCE</Link>
+
+          <div className="ml-4">
+          <ThemeToggle />
+        </div>
+        </div>
+      </div>
     </motion.div>
   );
 };

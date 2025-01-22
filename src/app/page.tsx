@@ -79,7 +79,7 @@ export default async function Home() {
               <>
               <FileUpload />
               <div className="flex mt-3 space-x-3">
-                <Button className="px-4 py-2 text-lg font-medium">Go to Chats</Button>
+                <Button className="px-4 py-2 text-lg font-medium" >Go to Chats</Button>
               </div>
             </>
             ) : (

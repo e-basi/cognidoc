@@ -4,6 +4,7 @@ import { Configuration, OpenAIApi } from "openai-edge";
 // Make sure you have OPENAI_API_KEY in your .env
 const config = new Configuration({
   apiKey: process.env.OPENAI_API_KEY!,
+  organization: process.env.OPENAI_ORGANIZATION,
 });
 
 const openai = new OpenAIApi(config);
@@ -21,9 +22,11 @@ export async function getEmbedding(text: string): Promise<number[]> {
 
     // The openai-edge library returns a special response object
     const result = await response.json();
+
+    // Return the array of floats from 'result.data[0].embedding'
     return result.data[0].embedding as number[];
   } catch (error) {
-    console.log("Error calling OpenAI embedding API:", error);
+    console.error("Error calling OpenAI embedding API:", error);
     throw error;
   }
 }
