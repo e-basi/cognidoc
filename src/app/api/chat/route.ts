@@ -15,7 +15,7 @@ export async function POST(req: Request) {
       model: openai(model),
       system: "You are a helpful assistant.",
       messages,
-      maxTokens: 4096
+      maxTokens: 2048
     });
 
     // Log each token as it streams
